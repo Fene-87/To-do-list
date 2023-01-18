@@ -2,14 +2,8 @@ import _ from 'lodash';
 import './style.css';
 
 function component() {
-    const element = document.createElement('div');
-    element.classList.add('element-list');
-    element.innerHTML = `
-      <div class="head-div">
-        <div class="first-row"><h3>Today's To Do</h3> <span><i class="fa-sharp fa-solid fa-arrows-spin"></i></span> </div>
-        <div class="first-row"><input type="text" class="book-input" id="book-title" placeholder="Add to your list..."/> <span><i class="fa-solid fa-plus"></i></span> </div>
-      </div>
-    `
+    const element = document.querySelector('.element-list');
+  
     const tasks = [
       {
         description: 'Wash the dishes',
@@ -48,7 +42,6 @@ function component() {
     return element;
   }
   
-  document.body.appendChild(component());
   window.onload = () => {
     component();
   }
