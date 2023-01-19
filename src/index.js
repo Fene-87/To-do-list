@@ -33,6 +33,32 @@ function component() {
       
     });
 
+    const updateComplete = document.querySelectorAll('.task-complete');
+    const tasksList = Store.getLocalStorage();
+    updateComplete.forEach((box, index) => {
+      box.addEventListener('change', () => {
+        if(box.checked){
+        tasksList[index].completed = true;
+        localStorage.setItem('tasks', JSON.stringify(tasksList));
+        } else {
+          tasksList[index].completed = false;
+          localStorage.setItem('tasks', JSON.stringify(tasksList));
+        }
+      })
+    })
+
+    const deleteTask = document.querySelectorAll('.delete');
+    const tasksDeleteList = Store.getLocalStorage();
+    deleteTask.forEach((deletedTask, index) => {
+      deletedTask.addEventListener('click', () => {
+        deletedTask.parentElement.parentElement.parentElement.remove();
+        tasksDeleteList[index].completed = true;
+        localStorage.setItem('tasks', JSON.stringify(tasksDeleteList));
+
+        Store.removeLocalStorage(tasksDeleteList);
+      })
+    })
+
     document.querySelector('.clear-button').addEventListener('click', (event) => {
       
       AddDelete.removeTask();
