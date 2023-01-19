@@ -19,7 +19,15 @@ function component() {
         const task = new TaskObject(description, id, completed);
         AddDelete.addTask(task);
         Store.addLocalStorage(task);
-        document.location.reload();
+
+        const updateComplete = StatusUpdate.updateAllCheckbox();
+        updateComplete.forEach((box, index) => {
+        box.addEventListener('change', () => {
+        StatusUpdate.completedCheckbox();
+        console.log(updateComplete);
+      })
+    })
+        
         AddDelete.clearFields();
       }
     });
@@ -39,7 +47,7 @@ function component() {
     updateComplete.forEach((box, index) => {
       box.addEventListener('change', () => {
         StatusUpdate.completedCheckbox();
-        console.log('hello');
+        console.log(updateComplete);
       })
     })
     
