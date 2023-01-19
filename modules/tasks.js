@@ -1,4 +1,5 @@
 import Store from "./store";
+import StatusUpdate from "./statusUpdate";
 
 export default class AddDelete {
     static displayTasks = () => {
@@ -21,6 +22,7 @@ export default class AddDelete {
         `;
 
         list.appendChild(row);
+        StatusUpdate.updateAllCheckbox();
     }
 
     static editTask = () => {
