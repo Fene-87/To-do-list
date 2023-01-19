@@ -72,6 +72,8 @@ i {
   font-family: 'Lato', sans-serif;
   font-size: 18px;
   color: #272a31;
+  border: none;
+  outline: none;
 }
 
 .clear-button {
