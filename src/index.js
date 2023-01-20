@@ -3,6 +3,7 @@ import './style.css';
 import TaskObject from '../modules/taskObj';
 import AddDelete from '../modules/tasks';
 import Store from '../modules/store';
+import StatusUpdate from '../modules/statusUpdate';
 
 function component() {
     document.addEventListener('DOMContentLoaded', AddDelete.displayTasks());
@@ -18,6 +19,15 @@ function component() {
         const task = new TaskObject(description, id, completed);
         AddDelete.addTask(task);
         Store.addLocalStorage(task);
+
+        const updateComplete = StatusUpdate.updateAllCheckbox();
+        updateComplete.forEach((box, index) => {
+        box.addEventListener('change', () => {
+        StatusUpdate.completedCheckbox();
+        console.log(updateComplete);
+      })
+    })
+        
         AddDelete.clearFields();
       }
     });
@@ -33,19 +43,14 @@ function component() {
       
     });
 
-    const updateComplete = document.querySelectorAll('.task-complete');
-    const tasksList = Store.getLocalStorage();
+    const updateComplete = StatusUpdate.updateAllCheckbox();
     updateComplete.forEach((box, index) => {
       box.addEventListener('change', () => {
-        if(box.checked){
-        tasksList[index].completed = true;
-        localStorage.setItem('tasks', JSON.stringify(tasksList));
-        } else {
-          tasksList[index].completed = false;
-          localStorage.setItem('tasks', JSON.stringify(tasksList));
-        }
+        StatusUpdate.completedCheckbox();
+        console.log(updateComplete);
       })
     })
+    
 
     const deleteTask = document.querySelectorAll('.delete');
     const tasksDeleteList = Store.getLocalStorage();
