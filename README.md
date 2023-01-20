@@ -57,7 +57,7 @@
 
 Click on the link to view the portfolio website.
 
-- [Coming Soon](https://fene-87.github.io/To-do-list/dist/.)
+- [Live Demo](https://fene-87.github.io/To-do-list/dist/.)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
