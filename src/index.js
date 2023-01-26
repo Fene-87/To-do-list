@@ -7,31 +7,17 @@ import StatusUpdate from '../modules/statusUpdate';
 
 function component() {
     document.addEventListener('DOMContentLoaded', AddDelete.displayTasks());
+    document.addEventListener('DOMContentLoaded', AddDelete.persistCheckbox());
 
     document.querySelector('.book-input').addEventListener('keyup', (event) => {
       event.preventDefault();
       const enterText = document.querySelector('.book-input').value;
       if(event.keyCode === 13 && enterText !== '') {
-        const description = document.querySelector('.book-input').value;
-        const id = Store.getLocalStorage().length + 1;
-        const completed = false;
-
-        const task = new TaskObject(description, id, completed);
-        AddDelete.addTask(task);
-        Store.addLocalStorage(task);
-
-        const updateComplete = StatusUpdate.updateAllCheckbox();
-        updateComplete.forEach((box, index) => {
-        box.addEventListener('change', () => {
-        StatusUpdate.completedCheckbox();
-        console.log(updateComplete);
-      })
-    })
-        
+        AddDelete.newTask();
         AddDelete.clearFields();
       }
-    });
-
+      })
+    
     const taskEdit = document.querySelectorAll('.task-text');
     taskEdit.forEach((task) => {
       task.addEventListener('keyup', (event) => {

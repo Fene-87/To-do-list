@@ -1,10 +1,29 @@
 import Store from "./store";
 import StatusUpdate from "./statusUpdate";
+import TaskObject from "./taskObj";
 
 export default class AddDelete {
     static displayTasks = () => {
         const taskList = Store.getLocalStorage();
         taskList.forEach((task) => AddDelete.addTask(task));
+    }
+
+    static newTask = () => {
+       const description = document.querySelector('.book-input').value;
+        const id = Store.getLocalStorage().length + 1;
+        const completed = false;
+
+        const task = new TaskObject(description, id, completed);
+        AddDelete.addTask(task);
+        Store.addLocalStorage(task);
+
+        const updateComplete = StatusUpdate.updateAllCheckbox();
+        updateComplete.forEach((box, index) => {
+        box.addEventListener('change', () => {
+        StatusUpdate.completedCheckbox();
+        console.log(updateComplete);
+        })
+      })
     }
 
     static addTask = (task) => {
@@ -14,7 +33,7 @@ export default class AddDelete {
         row.innerHTML = `
           <div class="task-element">
             <div class="task-description">
-              <input type="checkbox" class="task-complete"/> 
+              <input type="checkbox" class="task-complete" autocomplete="off"/> 
               <input type="text" class="task-text" value="${task.description}" />
             </div> 
             <div class="task-icon"><i class="fa-solid fa-ellipsis-vertical delete"></i></div>
@@ -46,6 +65,17 @@ export default class AddDelete {
         })
 
         localStorage.setItem('tasks', JSON.stringify(tasksList));
+    }
+
+    static persistCheckbox = () => {
+      const allCheckboxes = document.querySelectorAll('.task-complete');
+      const store = Store.getLocalStorage();
+
+      allCheckboxes.forEach((box, index) => {
+        if(store[index].completed === true){
+          box.checked = true;
+        }
+      })
     }
 
     static clearFields = () => {
