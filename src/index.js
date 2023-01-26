@@ -7,7 +7,6 @@ import StatusUpdate from '../modules/statusUpdate';
 
 function component() {
     document.addEventListener('DOMContentLoaded', AddDelete.displayTasks());
-    document.addEventListener('DOMContentLoaded', AddDelete.persistCheckbox());
 
     document.querySelector('.book-input').addEventListener('keyup', (event) => {
       event.preventDefault();
@@ -37,18 +36,9 @@ function component() {
       })
     })
     
+    AddDelete.deleteTaskIcon();
 
-    const deleteTask = document.querySelectorAll('.delete');
-    const tasksDeleteList = Store.getLocalStorage();
-    deleteTask.forEach((deletedTask, index) => {
-      deletedTask.addEventListener('click', () => {
-        deletedTask.parentElement.parentElement.parentElement.remove();
-        tasksDeleteList[index].completed = true;
-        localStorage.setItem('tasks', JSON.stringify(tasksDeleteList));
-
-        Store.removeLocalStorage(tasksDeleteList);
-      })
-    })
+    document.addEventListener('DOMContentLoaded', AddDelete.persistCheckbox());
 
     document.querySelector('.clear-button').addEventListener('click', (event) => {
       

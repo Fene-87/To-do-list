@@ -42,6 +42,7 @@ export default class AddDelete {
 
         list.appendChild(row);
         StatusUpdate.updateAllCheckbox();
+        console.log(list.childElementCount);
     }
 
     static editTask = () => {
@@ -63,8 +64,24 @@ export default class AddDelete {
             tasksList[index].completed = true;
           }
         })
+        
 
         localStorage.setItem('tasks', JSON.stringify(tasksList));
+    }
+
+    static deleteTaskIcon = () => {
+      const deleteTask = document.querySelectorAll('.delete');
+      const tasksDeleteList = Store.getLocalStorage();
+      deleteTask.forEach((deletedTask, index) => {
+      deletedTask.addEventListener('click', () => {
+        deletedTask.parentElement.parentElement.parentElement.remove();
+        tasksDeleteList[index].completed = true;
+        localStorage.setItem('tasks', JSON.stringify(tasksDeleteList));
+        console.log('deleted')
+
+        Store.removeLocalStorage(tasksDeleteList);
+      })
+    })
     }
 
     static persistCheckbox = () => {
