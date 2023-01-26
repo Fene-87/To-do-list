@@ -33,6 +33,13 @@ describe('Test of Add and Delete Functions', () => {
         const list = JSON.parse(localStorage.getItem('tasks')).length;
         expect(list).toEqual(1);
     });
-
+    
+    test('Should show task is removed', () => {
+        Store.addLocalStorage({ description: 'Wash Dishes', completed: true });
+        Store.addLocalStorage({ description: 'Wash House', completed: false });
+        Store.removeLocalStorage();
+        const list = JSON.parse(localStorage.getItem('tasks')).length;
+        expect(list).toEqual(1);
+    });
     
 })
