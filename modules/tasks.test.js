@@ -61,4 +61,12 @@ describe('Test of Add and Delete Functions', () => {
         expect(list).toBe(1);
     });
 
+    test('Properly update the completed status of task', () => {
+        const checkBox = document.querySelectorAll('.task-complete')
+        checkBox[0].checked = true;
+        StatusUpdate.completedCheckbox();
+        const list = JSON.parse(localStorage.getItem('tasks'));
+        expect(list[0].completed).toBeTruthy();
+    })
+
 })
