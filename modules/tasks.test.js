@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom'
 import AddDelete from "./tasks";
 import Store from './store';
+import StatusUpdate from './statusUpdate';
 
 describe('Test of Add and Delete Functions', () => {
     document.body.innerHTML = `
@@ -42,4 +43,30 @@ describe('Test of Add and Delete Functions', () => {
         expect(list).toEqual(1);
     });
     
+    //Part 2: Testing for status update.
+    test('Should properly edit task description', () => {
+        Store.addLocalStorage({ description: 'Wash Dishes', completed: false });
+        const changeTask = document.querySelector('.task-text');
+        changeTask.value = 'Wash Clothes';
+        AddDelete.editTask();
+        const list = JSON.parse(localStorage.getItem('tasks'));
+        expect(list[0].description).toEqual('Wash Clothes');
+    });
+
+    test('Button clears all completed tasks', () => {
+        const checkBox = document.querySelectorAll('.task-complete')
+        checkBox[0].checked = true;
+        AddDelete.removeTask();
+        const list = document.querySelector('.tasked-list').childElementCount;
+        expect(list).toBe(1);
+    });
+
+    test('Properly update the completed status of task', () => {
+        const checkBox = document.querySelectorAll('.task-complete')
+        checkBox[0].checked = true;
+        StatusUpdate.completedCheckbox();
+        const list = JSON.parse(localStorage.getItem('tasks'));
+        expect(list[0].completed).toBeTruthy();
+    })
+
 })
